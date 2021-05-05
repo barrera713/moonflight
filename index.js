@@ -1,3 +1,4 @@
+require("dotenv").config();
 const fetch = require("node-fetch");
 const accoundSid = process.env.SID;
 const AT = process.env.AT;
@@ -16,8 +17,8 @@ const Main = () => {
             /*
                 EJECT PRICE from response
 
-                API returns price from two indices
-                randomly one of these returns 0.0 
+                API returns price from two indices.
+                Randomly one of these returns 0.0 
                 while the other returns the actual price
             */
 
@@ -33,8 +34,9 @@ const Main = () => {
             console.log("[ERROR]", err)
         }
     }
+    
+    setInterval(fetchDogePrice); // one minute
 
-    setInterval(fetchDogePrice, 60000); // one minute
 
 
     const sendSMSForHighPrice = async () => {
@@ -56,13 +58,16 @@ const Main = () => {
     };
 
 
-    if(parseFloat(dogePrice) > 0.5) {
+    if(parseFloat(dogePrice) < 0.55) {
+        console.log("less than .5", parseFloat(dogePrice))
         sendSMSForHighPrice();
-    } else if('') {
+    } else if(parseFloat(dogePrice) > 0.58) {
+        console.log(parseFloat(dogePrice))
         sendSMSForDropPrice();
     } else {
         console.log("climbing or dropping...")
     }
+    
 
 };
 
