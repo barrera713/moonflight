@@ -1,0 +1,25 @@
+{
+  "name": "dogewatch",
+  "version": "1.0.0",
+  "description": "crypto price bot",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1",
+    "twilio": "^3.61.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barrera713/dogewatcher.git"
+  },
+  "author": "carlos barrera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/barrera713/dogewatcher/issues"
+  },
+  "homepage": "https://github.com/barrera713/dogewatcher#readme"
+}
