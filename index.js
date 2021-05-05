@@ -7,7 +7,7 @@ const client = require("twilio")(accoundSid, AT);
 
 const Main = () => {
 
-    let dogePrice = Number;
+    let dogePrice;
 
     const fetchDogePrice = async () => {
 
@@ -23,51 +23,58 @@ const Main = () => {
             */
 
             const dogeObject = await getData.json();
-
             if(parseFloat(dogeObject.data.prices[0].price) !== 0.0) {
                 dogePrice = dogeObject.data.prices[0].price
             } else {
                 dogePrice = dogeObject.data.prices[1].price;
             };
+
+
+            if(parseFloat(dogePrice) > 0.55) {
+                sendSMSForHighPrice();
+            } else if(parseFloat(dogePrice) < 0.55) {
+                sendSMSForDropPrice();
+            } else {
+                console.log("climbing or dropping...")
+            }
             
         } catch (err) {
             console.log("[ERROR]", err)
         }
     }
     
-    setInterval(fetchDogePrice); // one minute
+    // setInterval(fetchDogePrice); // one minute
+    fetchDogePrice();
 
 
 
     const sendSMSForHighPrice = async () => {
-        await client.messages
-        .create({
-            body: `***HIGH price has been met! The current Dogecoin price is at ${dogePrice}`,
-            from: '+14053745065',
-            to: '+17133736474'
-        });
+
+        try {
+            await client.messages
+            .create({
+                body: `***HIGH price has been met! The current Dogecoin price is at ${dogePrice}`,
+                from: '+14053745065',
+                to: '+17133736474'
+            });
+        } catch (err) {
+            console.log("[SMS High Error]", err)
+        }
     };
 
     const sendSMSForDropPrice = async () => {
-        await client.messages
-        .create({
-            body: `###LOW price has been met! The current Dogecoin price is at ${dogePrice}`,
-            from: '+14053745065',
-            to: '+17133736474'
-        });
+
+        try {
+            await client.messages
+            .create({
+                body: `###LOW price has been met! The current Dogecoin price is at ${dogePrice}`,
+                from: '+14053745065',
+                to: '+17133736474'
+            });
+        } catch (err) {
+            console.log("[SMS Drop Error]", err)
+        }
     };
-
-
-    if(parseFloat(dogePrice) < 0.55) {
-        console.log("less than .5", parseFloat(dogePrice))
-        sendSMSForHighPrice();
-    } else if(parseFloat(dogePrice) > 0.58) {
-        console.log(parseFloat(dogePrice))
-        sendSMSForDropPrice();
-    } else {
-        console.log("climbing or dropping...")
-    }
-    
 
 };
 
