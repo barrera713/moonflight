@@ -15,9 +15,9 @@ const Main = () => {
             console.log(etherPriceUSD)
 
             if(parseFloat(etherPriceUSD) > 3600) {
-                SMS.sendSMSForHighPrice(etherPriceUSD);
+                SMS.sendSMSForHighPrice("Ethereum", etherPriceUSD);
             } else if(parseFloat(etherPriceUSD) < 3500) {
-                SMS.sendSMSForDropPrice(etherPriceUSD);
+                SMS.sendSMSForDropPrice("Ethereum", etherPriceUSD);
             } else {
                 console.log("Scanning...")
             };

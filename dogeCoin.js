@@ -25,9 +25,9 @@ const Main = () => {
 
 
             if(parseFloat(dogePrice) > 0.55) {
-                SMS.sendSMSForHighPrice(dogePrice);
+                SMS.sendSMSForHighPrice("Dogecoin", dogePrice);
             } else if(parseFloat(dogePrice) < 0.55) {
-                SMS.sendSMSForDropPrice(dogePrice);
+                SMS.sendSMSForDropPrice("Dogecoin", dogePrice);
             } else {
                 console.log("climbing...")
             };

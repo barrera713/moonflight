@@ -3,11 +3,11 @@ const AT = process.env.AT;
 const client = require("twilio")(accoundSid, AT);
 
 
-exports.sendSMSForHighPrice = async (payload) => {
+exports.sendSMSForHighPrice = async (name, payload) => {
     try {
         await client.messages
         .create({
-            body: `***HIGH*** price has been met! The current Ethereum price is at ${payload}`,
+            body: `***HIGH*** price has been met! The current ${name} price is at ${payload}`,
             from: process.env.clientNum,
             to: process.env.myNum
         });
@@ -16,11 +16,11 @@ exports.sendSMSForHighPrice = async (payload) => {
     };
 };
 
-exports.sendSMSForDropPrice = async (payload) => {
+exports.sendSMSForDropPrice = async (name, payload) => {
     try {
         await client.messages
         .create({
-            body: `###LOW### price has been met! The current Ethereum price is at ${payload}`,
+            body: `###LOW### price has been met! The current ${name} price is at ${payload}`,
             from: process.env.clientNum,
             to: process.env.myNum
         });
