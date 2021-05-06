@@ -7,7 +7,7 @@ exports.sendSMSForHighPrice = async (name, payload) => {
     try {
         await client.messages
         .create({
-            body: `***HIGH*** price has been met! The current ${name} price is at ${payload}`,
+            body: `***HIGH*** price has been met! The current ${name} price is at ${payload}. If you'd like to update this, reply with the "New High" followed by the limit price`,
             from: process.env.clientNum,
             to: process.env.myNum
         });
@@ -20,7 +20,7 @@ exports.sendSMSForDropPrice = async (name, payload) => {
     try {
         await client.messages
         .create({
-            body: `###LOW### price has been met! The current ${name} price is at ${payload}`,
+            body: `###LOW### price has been met! The current ${name} price is at ${payload}. If you'd like to update this, reply with "New Low." followed by the limit price.`,
             from: process.env.clientNum,
             to: process.env.myNum
         });
