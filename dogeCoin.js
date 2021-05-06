@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const SMS = require("./SMS.js");
 
 
-const Main = () => {
+const Main = async () => {
 
     let dogePrice;
     const fetchDogePrice = async () => {
@@ -23,20 +23,21 @@ const Main = () => {
                 dogePrice = dogeObject.data.prices[1].price;
             };
 
-
-            if(parseFloat(dogePrice) > 0.55) {
-                SMS.sendSMSForHighPrice("Dogecoin", dogePrice);
-            } else if(parseFloat(dogePrice) < 0.55) {
-                SMS.sendSMSForDropPrice("Dogecoin", dogePrice);
-            } else {
-                console.log("climbing...")
-            };
             
         } catch (err) {
             console.log("[ERROR]", err)
         }
     }
-    fetchDogePrice();
+    
+    await fetchDogePrice();
+
+    if(parseFloat(dogePrice) > 0.55) {
+        SMS.sendSMSForHighPrice("Dogecoin", dogePrice);
+    } else if(parseFloat(dogePrice) < 0.55) {
+        SMS.sendSMSForDropPrice("Dogecoin", dogePrice);
+    } else {
+        console.log("climbing...")
+    };
 };
 
 Main();
