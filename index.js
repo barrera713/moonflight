@@ -8,7 +8,7 @@ const Main = () => {
     let etherPriceUSD;
     const fetchEtherPrice = async () => {
         try {
-            const response = await fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${process.env.ES}`)
+            const response = await fetch(`${process.env.ETH_API}&apikey=${process.env.ES}`)
             const etherData = await response.json();
             etherPriceUSD = etherData.result.ethusd;
 

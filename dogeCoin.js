@@ -8,7 +8,7 @@ const Main = () => {
     let dogePrice;
     const fetchDogePrice = async () => {
         try {
-            const getData = await fetch("https://sochain.com//api/v2/get_price/DOGE/USD");
+            const getData = await fetch(`${process.env.DOGE_API}`);
             /*
                 EJECT PRICE from response
 
