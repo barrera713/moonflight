@@ -24,21 +24,25 @@ const Main = async () => {
         }
     }
 
+    const listenForHighLimit = (etherUSD, highLimit) => {
+        // Watch price and send SMS if it meets High or Low price
+        if(highLimit !== undefined && parseFloat(etherUSD) >= parseFloat(highLimit)) {
+            SMS.sendSMSForHighPrice("Ethereum", etherUSD);
+        };
+    };
+
+    const listenForLowLimit = (etherUSD, lowLimit) => {
+        if(lowLimit !== undefined && parseFloat(etherUSD) <= parseFloat(lowLimit)) {
+            SMS.sendSMSForDropPrice("Ethereum", etherUSD);
+        };
+    };
+
+
     setInterval( async () => {
         await fetchEtherPrice();
-        scanForHighLimit(etherUSD, highLimit);
-        scanForLowLimit(etherUSD, lowLimit);
-        console.log("ETHER USD", etherUSD ? etherUSD : "Not fetched yet");
-
-        // if(highLimit) {
-            console.log("High limit", highLimit);
-        // }
-
-        // if(lowLimit) {
-            console.log("Low limit", lowLimit);
-        // }
-
-
+        listenForHighLimit(etherUSD, highLimit);
+        listenForLowLimit(etherUSD, lowLimit);
+    
         app.post("/sms", (req, res) => {
             const twiml = new MessagingResponse();
             let responsePrice = req.body.Body.trim().toLowerCase();
@@ -61,40 +65,6 @@ const Main = async () => {
     
     }, 3000);
 
-    const scanForHighLimit = (etherUSD, highLimit) => {
-        // Watch price and send SMS if it meets High or Low price
-        if(highLimit !== undefined && parseFloat(etherUSD) >= parseFloat(highLimit)) {
-            SMS.sendSMSForHighPrice("Ethereum", etherUSD);
-        };
-    };
-
-    const scanForLowLimit = (etherUSD, lowLimit) => {
-        if(lowLimit !== undefined && parseFloat(etherUSD) <= parseFloat(lowLimit)) {
-            SMS.sendSMSForDropPrice("Ethereum", etherUSD);
-        };
-    };
-
-    // app.post("/sms", (req, res) => {
-    //     const twiml = new MessagingResponse();
-    //     let responsePrice = req.body.Body.trim().toLowerCase();
-
-    //     if(responsePrice.indexOf("high") !== -1) {
-    //         console.log("BODY", req.body.Body);
-    //         let sliceAfterHigh = req.body.Body.lastIndexOf("h");
-    //         highLimit = req.body.Body.slice(sliceAfterHigh + 1).trim();
-    //         console.log("HIGH limit", highLimit);
-    //         scanForHighLimit(etherUSD, highLimit);
-    //     } else if(responsePrice.indexOf("low") !== -1) {
-    //         let sliceAfterLow = req.body.Body.lastIndexOf("w");
-    //         lowLimit = req.body.Body.slice(sliceAfterLow + 1).trim();
-    //         scanForLowLimit(etherUSD, lowLimit);
-    //     } else {
-    //         console.log("idk...")
-    //     }
-
-    //     res.writeHead(200, {'Content-Type': 'text/xml'});
-    //     res.end(twiml.toString());
-    // });
     
     http.createServer(app).listen(1337, () => {
         console.log("Express server listening on port 1337");
