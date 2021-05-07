@@ -3,7 +3,7 @@ const AT = process.env.AT;
 const client = require("twilio")(accoundSid, AT);
 
 
-exports.sendSMSForHighPrice = async (name, payload) => {
+exports.sendSMSForHighLimit = async (name, payload) => {
     try {
         await client.messages
         .create({
@@ -16,7 +16,7 @@ exports.sendSMSForHighPrice = async (name, payload) => {
     };
 };
 
-exports.sendSMSForDropPrice = async (name, payload) => {
+exports.sendSMSForDropLimit = async (name, payload) => {
     try {
         await client.messages
         .create({

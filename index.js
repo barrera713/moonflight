@@ -27,13 +27,13 @@ const Main = async () => {
     const listenForHighLimit = (etherUSD, highLimit) => {
         // Watch price and send SMS if it meets High or Low price
         if(highLimit !== undefined && parseFloat(etherUSD) >= parseFloat(highLimit)) {
-            SMS.sendSMSForHighPrice("Ethereum", etherUSD);
+            SMS.sendSMSForHighLimit("Ethereum", etherUSD);
         };
     };
 
     const listenForLowLimit = (etherUSD, lowLimit) => {
         if(lowLimit !== undefined && parseFloat(etherUSD) <= parseFloat(lowLimit)) {
-            SMS.sendSMSForDropPrice("Ethereum", etherUSD);
+            SMS.sendSMSForDropLimit("Ethereum", etherUSD);
         };
     };
 
